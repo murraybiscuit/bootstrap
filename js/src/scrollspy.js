@@ -38,6 +38,7 @@ const ScrollSpy = (($) => {
 
   const Event = {
     ACTIVATE      : `activate${EVENT_KEY}`,
+    NAV_CHANGE    : `navchange${EVENT_KEY}`,
     SCROLL        : `scroll${EVENT_KEY}`,
     LOAD_DATA_API : `load${EVENT_KEY}${DATA_API_KEY}`
   }
@@ -263,10 +264,14 @@ const ScrollSpy = (($) => {
 
       let currentTarget = this._config.target;
       $link.each(function(){
-        let event = jQuery.Event(Event.ACTIVATE);
+        let event = jQuery.Event(Event.NAV_CHANGE);
         event.target = this;
         $(currentTarget).trigger(event);
       });
+      
+      $(this._scrollElement).trigger(Event.ACTIVATE, {
+        relatedTarget: target
+      })
     }
 
     _clear() {
