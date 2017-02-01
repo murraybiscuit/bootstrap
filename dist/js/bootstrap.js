@@ -2402,8 +2402,11 @@ var ScrollSpy = function ($) {
         $link.parents(Selector.LI).find('> ' + Selector.NAV_LINKS).addClass(ClassName.ACTIVE);
       }
 
-      $(this._scrollElement).trigger(Event.ACTIVATE, {
-        relatedTarget: target
+      var currentTarget = this._config.target;
+      $link.each(function () {
+        var event = jQuery.Event(Event.ACTIVATE);
+        event.target = this;
+        $(currentTarget).trigger(event);
       });
     };
 
