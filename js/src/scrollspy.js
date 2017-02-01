@@ -261,9 +261,12 @@ const ScrollSpy = (($) => {
         $link.parents(Selector.LI).find(`> ${Selector.NAV_LINKS}`).addClass(ClassName.ACTIVE)
       }
 
-      $(this._scrollElement).trigger(Event.ACTIVATE, {
-        relatedTarget: target
-      })
+      let currentTarget = this._config.target;
+      $link.each(function(){
+        let event = jQuery.Event(Event.ACTIVATE);
+        event.target = this;
+        $(currentTarget).trigger(event);
+      });
     }
 
     _clear() {
